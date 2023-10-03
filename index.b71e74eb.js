@@ -835,7 +835,6 @@ function isGitHubPages() {
 }
 function initRouter(container) {
     function goTo(path) {
-        // console.log(path);
         const completePath = isGitHubPages() ? BASE_PATH + path : path;
         history.pushState({}, "", path);
         handleRoute(completePath);
@@ -890,7 +889,7 @@ function initHome(params) {
     btn?.addEventListener("click", (e)=>{
         e.preventDefault();
         const goTo = params;
-        goTo.goTo("/instructions");
+        return goTo.goTo("/instructions");
     });
     return div;
 }
