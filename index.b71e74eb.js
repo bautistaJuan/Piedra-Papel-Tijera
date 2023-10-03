@@ -818,46 +818,41 @@ var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "initRouter", ()=>initRouter);
 var _home = require("./pages/home");
-var _introduction = require("./pages/introduction");
+const BASE_PATH = "/dwf-m5-desafio-final";
+function isGithubPages() {
+    return location.host.includes("bautistaJuan.github.io");
+}
 const routes = [
-    {
-        path: /\/instructions/,
-        component: (0, _introduction.instructions)
-    },
     {
         path: /\/welcome/,
         component: (0, _home.initHome)
     }
 ];
-const BASE_PATH = "/dwf-m5-desafio-final";
-function isGitHubPages() {
-    return location.host.includes("github.io");
-}
 function initRouter(container) {
     function goTo(path) {
-        const completePath = isGitHubPages() ? BASE_PATH + path : path;
-        history.pushState({}, "", path);
+        const completePath = isGithubPages() ? BASE_PATH + path : path;
+        history.pushState({}, "", completePath);
         handleRoute(completePath);
     }
     function handleRoute(route) {
-        const newRoute = isGitHubPages() ? route.replace(BASE_PATH, "") : route;
+        console.log("el handle Route recibio una nueva ruta y es", route);
+        const newRoute = isGithubPages() ? route.replace(BASE_PATH, "") : route;
         for (const r of routes)if (r.path.test(newRoute)) {
-            const elemento = r.component({
+            const el = r.component({
                 goTo: goTo
             });
             if (container.firstChild) container.firstChild.remove();
-            return container.appendChild(elemento);
+            container.appendChild(el);
         }
     }
-    if (location.pathname == "/" || location.host.includes("github.io")) goTo("/welcome");
+    if (location.pathname == "/" || location.pathname == "/dwf-m5-desafio-final/") goTo("/welcome");
     else handleRoute(location.pathname);
-    console.log(window);
-    window.onpopstate = ()=>{
+    window.onpopstate = function() {
         handleRoute(location.pathname);
     };
 }
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./pages/home":"l5Ogl","./pages/introduction":"9gQWG"}],"l5Ogl":[function(require,module,exports) {
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./pages/home":"l5Ogl"}],"l5Ogl":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "initHome", ()=>initHome);
@@ -938,29 +933,6 @@ module.exports = require("5060a788af7d1f1").getBundleURL("7UhFu") + "piedra.dbe5
 },{"5060a788af7d1f1":"lgJ39"}],"5RLXy":[function(require,module,exports) {
 module.exports = require("aed99fcb0fa27c3b").getBundleURL("7UhFu") + "tijera.d3d2f5f9.png" + "?" + Date.now();
 
-},{"aed99fcb0fa27c3b":"lgJ39"}],"9gQWG":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "instructions", ()=>instructions);
-function instructions(params) {
-    const div = document.createElement("div");
-    div.className = "instructions-container";
-    div.innerHTML = `
-  <div class="container-title">
-    <h1 class="title">Introduccion</h1>
-  </div>
-      <div class="container-btn">
-        <my-button class="button"></my-button>
-      </div>
-    `;
-    const btn = div.querySelector(".button");
-    btn?.addEventListener("click", (e)=>{
-        e.preventDefault();
-        console.log("Hello");
-    });
-    return div;
-}
-
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}]},["2oZg2","h7u1C"], "h7u1C", "parcelRequire7796")
+},{"aed99fcb0fa27c3b":"lgJ39"}]},["2oZg2","h7u1C"], "h7u1C", "parcelRequire7796")
 
 //# sourceMappingURL=index.b71e74eb.js.map
